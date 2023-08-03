@@ -1,0 +1,59 @@
+.home1{
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    // flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2.5rem;
+    position: fixed;
+    > img{
+        height: 300px;
+    }
+    > .home-content{
+        width: 70%;
+        > h1{
+            font-size: 4rem;
+            margin-bottom: 13px;
+        }
+        > p {
+            font-size: 22px;
+            margin-bottom: 2rem;
+
+        }
+
+        > form > .home-btn {
+            padding: 13px;
+            margin-right: 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            background-color:  rgb(23, 127, 212);
+            color: white;
+            font-weight: 300;
+            cursor: pointer;
+        }
+    }
+}
+
+@media screen and (max-width: 852px) {
+    .home1{
+        flex-direction: column;
+        justify-content: baseline;
+
+        > .home-content {
+            padding-left: 2.5rem;
+            width: 100%;
+            padding: 0;
+
+            > h1 {
+                font-size: 2rem;
+            }
+            > p {
+                font-size: 17px
+            }
+        }
+        > img {
+            height: 200px;
+        }
+    }
+}
