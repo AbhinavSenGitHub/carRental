@@ -6,7 +6,7 @@ import SignIn from "./Components/SignIn";
 import Login from "./Components/Login";
 import Host from "./Components/Host";
 import Myride from "./Components/Myride";
-
+import CarPost from "./Components/CarPost";
 // css
 import "./styles/App.scss";
 import "./styles/header.scss";
@@ -21,8 +21,9 @@ function App() {
       <Routes>
       <Route path="/" element= {<Home/>} />
       <Route path="/signin" element= {<SignIn/>} /> 
-      <Route path="/login" element= {<Login/>} />  
-      <Route path="/host" element= {<Host/>} />  
+      <Route path="/login" element= {<Login/>} />   
+      <Route path="/host" element= {<Host/>} /> 
+      <Route path="/carpost" element= {<CarPost/>} />  
       <Route path="/myride" element= {<Myride/>} />       
       </Routes>
     </Router>

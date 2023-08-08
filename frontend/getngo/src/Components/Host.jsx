@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
+import {Link} from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 const Host = () => {
@@ -6,6 +8,7 @@ const Host = () => {
 
   const handleImageChange = (event) => {
     const files = event.target.files;
+    
     const imageArray = [];
 
     // Loop through the selected files and add them to the imageArray
@@ -28,44 +31,39 @@ const Host = () => {
     }
   };
 
-  const [carNumber, setCarNumber] = useState('');
+  const [vehicle, setVehicle] = useState('');
   const [fuelType, setFuelType] = useState('');
   const [registrationYear, setRegistrationYear] = useState('');
-  const [transmissionType, setTransmissionType] = useState('Automatic');
+  const [transmissionType, setTransmissionType] = useState('');
   const [kmDriven, setKmDriven] = useState('');
+  const [cityName, setCity] = useState('');
 
-  const handleCarNumberChange = (event) => {
-    setCarNumber(event.target.value);
-  };
-
-  const handleFuelTypeChange = (event) => {
-    setFuelType(event.target.value);
-  };
-
-  const handleRegistrationYearChange = (event) => {
-    setRegistrationYear(event.target.value);
-  };
-
-  const handleTransmissionTypeChange = (event) => {
-    setTransmissionType(event.target.value);
-  };
-
-  const handleKmDrivenChange = (event) => {
-    setKmDriven(event.target.value);
-  };
-
-  const handleCityName = (event) => {
-    setKmDriven(event.target.value);
-  };
-
-
+const onSubmit = async (e) => {
+  e.preventDefault()
+  // const formData = new FormData();
+  try {
+    await axios.post('http://localhost:1234/api/host',{
+      images: images,
+      vehicle: vehicle, 
+      fuleType: fuelType,
+      registrationYear: registrationYear, 
+      transmissionType: transmissionType, 
+      kmDriven: kmDriven, 
+      cityName: cityName
+    })
+  }
+  catch (e) {
+    console.log(e);
+  }
+}
+//onChange={handleImageChange}
   return (
     <div className="host-main">
     <div className="host-sub-main">
     <h1 className="heading">Add your car details here</h1>
     <p className="heading-p">Unlock Your Car's Earning Potential: Rent It Out Today!</p>
-    <form action="" method="post">
-      <input className="img-add-option" type="file" multiple onChange={handleImageChange}/>
+    <form action="" method="post" enctype="multipart/form-data">
+      <input className="img-add-option" type="file" name="image" multiple onChange={handleImageChange}/>     
       {images.length > 0 && (
         <Carousel>
           {images.map((image, index) => (
@@ -78,13 +76,18 @@ const Host = () => {
 
       <div className="input-fields">
       <div>
-        <h3>Car Number</h3>
-        <input type="text" value={carNumber} onChange={handleCarNumberChange} />
+        <h3>Vachile Type</h3>
+        {/* <input type="text" value={carNumber} onChange={handleCarNumberChange} /> */}
+        <select name="vehicle" onChange={(e) => { setVehicle(e.target.value) }}>
+        <option value="">-</option>
+          <option value="4 wheeler">4 wheeler</option>
+          <option value="2 wheeler">2 wheeler</option>
+        </select>
       </div>
 
       <div>
         <h3>Fuel Type</h3>
-        <select value={fuelType} onChange={handleFuelTypeChange}>
+        <select name="fuleType" onChange={(e) => { setFuelType(e.target.value) }}>
           <option value="">-- Select Fuel Type --</option>
           <option value="Petrol">Petrol</option>
           <option value="Diesel">Diesel</option>
@@ -95,12 +98,14 @@ const Host = () => {
 
       <div>
         <h3>Year of Car Registration</h3>
-        <input type="number" value={registrationYear} onChange={handleRegistrationYearChange} />
+        <input name="registrationYear" type="number" onChange={(e) => { setRegistrationYear(e.target.value) }}/>
+        
       </div>
 
       <div>
         <h3>Transmission Type</h3>
-        <select value={transmissionType} onChange={handleTransmissionTypeChange}>
+        <select name="transmissionType" onChange={(e) => { setTransmissionType(e.target.value) }}>
+        <option value="Automatic">-</option>
           <option value="Automatic">Automatic</option>
           <option value="Manual">Manual</option>
         </select>
@@ -108,13 +113,13 @@ const Host = () => {
 
       <div>
         <h3>Car KM Driven</h3>
-        <input type="number" value={kmDriven} onChange={handleKmDrivenChange} />
+        <input name="kmDriven" type="text" onChange={(e) => { setKmDriven(e.target.value) }}/>
       </div>
       <div>
         <h3>City Name</h3>
-        <input type="text" value={kmDriven} onChange={handleCityName} />
+        <input name="cityName" type="text" onChange={(e) => { setCity(e.target.value) }}/>
       </div>
-      <button className="btn-host-submit" type="submit">Submit</button>
+      <button className="btn-host-submit" type="submit" onClick={onSubmit} value="Submit"><Link to="/carPost">Submit </Link></button>
       </div>
       
       </form>

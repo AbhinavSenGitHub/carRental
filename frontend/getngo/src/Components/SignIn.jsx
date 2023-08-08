@@ -6,25 +6,22 @@ import { FaGoogle } from 'react-icons/fa';
 import axios from "axios";
 const SignIn = () => {
 
-  // const history=useNavigate();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [number, setNumber] = useState('');
 
-  const handleSubmit = async (e) => {
-
-    e.preventDefault();
-
+  const submit = async (e) => {
+    e.preventDefault()
     try {
-      await axios.post('http://localhost:6000/signIn', {
-        username
+      await axios.post('http://localhost:1234/api/signin', {
+        username: username, password: password, number: number
       })
-
-    } catch (e) {
-      console.log('Error:', e);
     }
-  };
+    catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <>
@@ -32,20 +29,21 @@ const SignIn = () => {
         <div className="container">
           <h2>Sign-Up</h2>
           <p>Happy to see you here!</p>
-          <form action="/test" method="post" className="input-section">
+          <form action="" method="post" className="input-section">
             <div className="profile-div">
               <img src={profile} alt="" />
             </div>
             <div className="input-div">
-              <input type="text" name="username" onChange={(e) => { setUsername(e.target.value) }} placeholder="Username" />
-              <input type="password" name="password" onChange={(e) => { setPassword(e.target.value) }} placeholder="Password" />
-              <input type="text" name="number" onChange={(e) => { setNumber(e.target.value) }} placeholder="Phone Number" />
+              <input type="text" name="username" onChange={(e) => { setUsername(e.target.value) }} placeholder='username' />
+              <input type="password" name="password" onChange={(e) => { setPassword(e.target.value) }} placeholder='Password' />
+              <input type="text" name="number" onChange={(e) => { setNumber(e.target.value) }} placeholder='Phone number' />
+
               <label>or</label>
               <div className="google-icon">
                 <div className="FaGoogle-icon"><FaGoogle /></div>
                 <div className="continew-google">Continue with google </div>
               </div>
-              <button type="submit" onClick={handleSubmit} value="Submit">New account</button>
+              <button type="submit" onClick={submit} value="Submit">New account</button>
               <Link className="have-Account" to="/login">Already have an account?</Link>
             </div>
           </form>
