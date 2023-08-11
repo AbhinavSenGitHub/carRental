@@ -14,6 +14,7 @@ import "./styles/home.scss";
 import "./styles/signIn.scss"
 import "./styles/host.scss"
 import "./styles/myride.scss"
+import "./styles/carPost.scss"
 function App() {
   return (
     <Router>

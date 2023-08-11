@@ -22,7 +22,7 @@ mongoose.connect("mongodb://0.0.0.0:27017/getngo")      //"mongodb://0.0.0.0:270
         type:String,
         // required:true
       },
-      image: {type: String},
+      image: String,
       host:[
       //   vehicle:{
       //   type:String,

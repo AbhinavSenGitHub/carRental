@@ -7,6 +7,7 @@ const Host = () => {
   const [images, setImages] = useState([]);
 
   const handleImageChange = (event) => {
+        // setImages(event.target.files[0])
     const files = event.target.files;
     
     const imageArray = [];
@@ -32,30 +33,41 @@ const Host = () => {
   };
 
   const [vehicle, setVehicle] = useState('');
+  const [company, setCompany] = useState('');
+  const [name, setName] = useState('');
   const [fuelType, setFuelType] = useState('');
   const [registrationYear, setRegistrationYear] = useState('');
   const [transmissionType, setTransmissionType] = useState('');
+  const [seats, setSeats] = useState('');
+  const [fastag, setFastag] = useState('');
   const [kmDriven, setKmDriven] = useState('');
   const [cityName, setCity] = useState('');
+  const [feedback, setFeedback] = useState('');
+  const [price, setPrice] = useState('');
 
 const onSubmit = async (e) => {
-  e.preventDefault()
   // const formData = new FormData();
-  try {
+  // formData.append("file", images);
+  try{
     await axios.post('http://localhost:1234/api/host',{
-      images: images,
       vehicle: vehicle, 
+      company: company,
+      name: name,
       fuleType: fuelType,
       registrationYear: registrationYear, 
       transmissionType: transmissionType, 
+      seats: seats,
+      fastag: fastag,
       kmDriven: kmDriven, 
-      cityName: cityName
+      cityName: cityName,
+      feedback: feedback,
+      price: price
     })
-  }
-  catch (e) {
+  }catch (e) {
     console.log(e);
   }
-}
+  }
+  
 //onChange={handleImageChange}
   return (
     <div className="host-main">
@@ -63,8 +75,9 @@ const onSubmit = async (e) => {
     <h1 className="heading">Add your car details here</h1>
     <p className="heading-p">Unlock Your Car's Earning Potential: Rent It Out Today!</p>
     <form action="" method="post" enctype="multipart/form-data">
+    {/* <input type="file" accept="image/*" onChange={handleImageChange}/> */}
       <input className="img-add-option" type="file" name="image" multiple onChange={handleImageChange}/>     
-      {images.length > 0 && (
+     {images.length > 0 && (
         <Carousel>
           {images.map((image, index) => (
             <div key={index}>
@@ -72,7 +85,7 @@ const onSubmit = async (e) => {
             </div>
           ))}
         </Carousel>
-      )}
+      )} 
 
       <div className="input-fields">
       <div>
@@ -83,6 +96,16 @@ const onSubmit = async (e) => {
           <option value="4 wheeler">4 wheeler</option>
           <option value="2 wheeler">2 wheeler</option>
         </select>
+      </div>
+
+      <div>
+        <h3>Company</h3>
+        <input name="company" type="text" onChange={(e) => { setCompany(e.target.value)}}/>
+      </div>
+
+      <div>
+        <h3>Vachile name</h3>
+        <input name="name" type="text" onChange={(e) => { setName(e.target.value)}}/>
       </div>
 
       <div>
@@ -112,13 +135,39 @@ const onSubmit = async (e) => {
       </div>
 
       <div>
+        <h3>Seats</h3>
+        <input name="seats" type="text" onChange={(e) => { setSeats(e.target.value)}}/>
+      </div>
+
+      <div>
+        <h3>FASTag Available</h3>
+        <select name="fastag" onChange={(e) => { setFastag(e.target.value) }}>
+        <option value="">-</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <div>
         <h3>Car KM Driven</h3>
         <input name="kmDriven" type="text" onChange={(e) => { setKmDriven(e.target.value) }}/>
       </div>
+
       <div>
-        <h3>City Name</h3>
+        <h3>Location / city name</h3>
         <input name="cityName" type="text" onChange={(e) => { setCity(e.target.value) }}/>
       </div>
+
+      <div>
+      <h3>Personal Feedback</h3>
+      <input name="feedback" type="text" onChange={(e) => {setFeedback(e.target.value)}}/>
+      </div>
+
+      <div>
+        <h3>Price /hr</h3>
+        <input name="price" type="text" onChange={(e) => { setPrice(e.target.value)}}/>
+      </div>
+
       <button className="btn-host-submit" type="submit" onClick={onSubmit} value="Submit"><Link to="/carPost">Submit </Link></button>
       </div>
       
@@ -132,20 +181,21 @@ export default Host;
 
 
 
-{/* <div>
-            <label>Contact number</label>
-            <input type="number" placeholder="Contact no."/>
+//  <div>
+//             <label>Contact number</label>
+//             <input type="number" placeholder="Contact no."/>
             
-            <label>Vehicle Details</label>
-            <select id="vehicleType" value={selectedVehicle} onChange={handleVehicleChange}>
-        <option value="">-- Select Vehicle Type --</option>
-        <option value="twoWheeler">Two-Wheeler</option>
-        <option value="fourWheeler">Four-Wheeler</option>
-      </select>
-            <input type="text" placeholder="Car number"/>
-            <input type="text" placeholder="Car KM driven"/>
-            <input type="text" placeholder="City name"/>
-            <input type="text" placeholder="Fule Type"/>
-            <checkbox
+//             <label>Vehicle Details</label>
+//             <select id="vehicleType" value={selectedVehicle} onChange={handleVehicleChange}>
+//         <option value="">-- Select Vehicle Type --</option>
+//         <option value="twoWheeler">Two-Wheeler</option>
+//         <option value="fourWheeler">Four-Wheeler</option>
+//       </select>
+//             <input type="text" placeholder="Car number"/>
+//             <input type="text" placeholder="Car KM driven"/>
+//             <input type="text" placeholder="City name"/>
+//             <input type="text" placeholder="Fule Type"/>
+//             <checkbox
 
-      </div> */}
+      // </div>    
+      // 

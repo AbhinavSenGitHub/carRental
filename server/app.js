@@ -14,7 +14,7 @@ app.use(cors());
 
 // multer setup 
 const storage = multer.diskStorage({ 
-  destination: 'public/assets',
+  destination: 'public/',
   filename: (req, file, cb) => {
     cb(null, file.originalname)          //if null (no error then give original name of the file)
   }
@@ -69,20 +69,23 @@ app.post("/api/login", (req, res) => {
 });
 
 app.post("/api/host", async(req, res) => {
-  const {vehicle, fuleType, registrationYear, transmissionType, kmDriven, cityName} = req.body
-
-// const imageName = req.file.filename;
-// await User.create({image: imageName})
-
+  const {vehicle, company, name, fuleType, registrationYear, transmissionType, seats, fastag, kmDriven, cityName, feedback, price} = req.body
+ 
   const userHost = {
-    image: image,
     vehicle: vehicle, 
+    company: company,
+    name: name,
     fuleType:fuleType,
     registrationYear: registrationYear,
     transmissionType: transmissionType, 
+    seats: seats,
+    fastag: fastag,
     kmDriven:kmDriven,
-    cityName: cityName
+    cityName: cityName,
+    feedback: feedback,
+    price: price,
   }
+  
   console.log("login_id compose:- " + userID);
   User.updateOne({ _id: userID}, {$push: {host: userHost}})
   .then(() => {
@@ -96,8 +99,38 @@ app.post("/api/host", async(req, res) => {
 
 app.get('/demo',async (req,res)=>{
   const docs = await User.find({});
+  console.log(docs)
   res.json(docs)
 })
 app.listen(1234, () => {
   console.log("Running on port 1234");
 })
+
+
+
+
+// app.post("/api/host", async(req, res) => {
+//   const {vehicle, fuleType, registrationYear, transmissionType, kmDriven, cityName} = req.body
+
+// // const imageName = req.file.filename;
+// // await User.create({image: imageName})
+
+//   const userHost = {
+//     image: image,
+//     vehicle: vehicle, 
+//     fuleType:fuleType,
+//     registrationYear: registrationYear,
+//     transmissionType: transmissionType, 
+//     kmDriven:kmDriven,
+//     cityName: cityName
+//   }
+//   console.log("login_id compose:- " + userID);
+//   User.updateOne({ _id: userID}, {$push: {host: userHost}})
+//   .then(() => {
+//     console.log("Post insert Successful");
+//   }).catch((err) => {
+//     console.log("Error :- " , err)
+//   });
+//   res.json(userHost)
+//   //  await User.insertMany([userHost])
+// })
