@@ -1,41 +1,41 @@
 import axios from "axios";
 import React, { useState } from "react";
 import {Link} from "react-router-dom";
-import { Carousel } from "react-responsive-carousel";
+// import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 const Host = () => {
-  const [images, setImages] = useState([]);
+  // const [images, setImages] = useState([]);
 
-  const handleImageChange = (event) => {
-        // setImages(event.target.files[0])
-    const files = event.target.files;
+  // const handleImageChange = (event) => {
+  //       // setImages(event.target.files[0])
+  //   const files = event.target.files;
     
-    const imageArray = [];
+  //   const imageArray = [];
 
-    // Loop through the selected files and add them to the imageArray
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const reader = new FileReader();
+  //   // Loop through the selected files and add them to the imageArray
+  //   for (let i = 0; i < files.length; i++) {
+  //     const file = files[i];
+  //     const reader = new FileReader();
 
-      reader.onloadend = () => {
-        // The 'result' property contains the data URL for the image
-        imageArray.push(reader.result);
+  //     reader.onloadend = () => {
+  //       // The 'result' property contains the data URL for the image
+  //       imageArray.push(reader.result);
 
-        // If all images have been read, update the state with the new imageArray
-        if (imageArray.length === files.length) {
-            setImages((prevImages) => [...prevImages, ...imageArray]);
-        }
-      };
+  //       // If all images have been read, update the state with the new imageArray
+  //       if (imageArray.length === files.length) {
+  //           setImages((prevImages) => [...prevImages, ...imageArray]);
+  //       }
+  //     };
 
-      // Read the image as a data URL
-      reader.readAsDataURL(file);
-    }
-  };
-
+  //     // Read the image as a data URL
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+  const [image, setImage] = useState('');
   const [vehicle, setVehicle] = useState('');
   const [company, setCompany] = useState('');
   const [name, setName] = useState('');
-  const [fuelType, setFuelType] = useState('');
+  const [fuelType, setFuelType] = useState('');    // const [fuelType, setFuelType] = useState('');
   const [registrationYear, setRegistrationYear] = useState('');
   const [transmissionType, setTransmissionType] = useState('');
   const [seats, setSeats] = useState('');
@@ -46,26 +46,23 @@ const Host = () => {
   const [price, setPrice] = useState('');
 
 const onSubmit = async (e) => {
-  // const formData = new FormData();
-  // formData.append("file", images);
-  try{
-    await axios.post('http://localhost:1234/api/host',{
-      vehicle: vehicle, 
-      company: company,
-      name: name,
-      fuleType: fuelType,
-      registrationYear: registrationYear, 
-      transmissionType: transmissionType, 
-      seats: seats,
-      fastag: fastag,
-      kmDriven: kmDriven, 
-      cityName: cityName,
-      feedback: feedback,
-      price: price
-    })
-  }catch (e) {
-    console.log(e);
-  }
+  const formData = new FormData();
+  formData.append("image", image);
+  formData.append("vehicle", vehicle);
+  formData.append("company", company);
+  formData.append("name", name);
+  formData.append("fuelType", fuelType);
+  formData.append("registrationYear", registrationYear);
+  formData.append("transmissionType", transmissionType);
+  formData.append("seats", seats);
+  formData.append("fastag", fastag);
+  formData.append("kmDriven", kmDriven);
+  formData.append("cityName", cityName);
+  formData.append("feedback", feedback);
+  formData.append("price", price);
+
+    await axios.post('http://localhost:1234/api/host', formData, { headers: {'Content-Type': 'multipart/form-data'}})
+  
   }
   
 //onChange={handleImageChange}
@@ -75,8 +72,12 @@ const onSubmit = async (e) => {
     <h1 className="heading">Add your car details here</h1>
     <p className="heading-p">Unlock Your Car's Earning Potential: Rent It Out Today!</p>
     <form action="" method="post" enctype="multipart/form-data">
-    {/* <input type="file" accept="image/*" onChange={handleImageChange}/> */}
-      <input className="img-add-option" type="file" name="image" multiple onChange={handleImageChange}/>     
+    <input
+          onChange={e => setImage(e.target.files[0])} 
+          type="file" 
+          accept="image/*"
+        />
+      {/* <input className="img-add-option" type="file" name="image" multiple onChange={handleImageChange}/>     
      {images.length > 0 && (
         <Carousel>
           {images.map((image, index) => (
@@ -85,7 +86,7 @@ const onSubmit = async (e) => {
             </div>
           ))}
         </Carousel>
-      )} 
+      )}  */}
 
       <div className="input-fields">
       <div>
@@ -179,23 +180,24 @@ const onSubmit = async (e) => {
 
 export default Host;
 
-
-
-//  <div>
-//             <label>Contact number</label>
-//             <input type="number" placeholder="Contact no."/>
-            
-//             <label>Vehicle Details</label>
-//             <select id="vehicleType" value={selectedVehicle} onChange={handleVehicleChange}>
-//         <option value="">-- Select Vehicle Type --</option>
-//         <option value="twoWheeler">Two-Wheeler</option>
-//         <option value="fourWheeler">Four-Wheeler</option>
-//       </select>
-//             <input type="text" placeholder="Car number"/>
-//             <input type="text" placeholder="Car KM driven"/>
-//             <input type="text" placeholder="City name"/>
-//             <input type="text" placeholder="Fule Type"/>
-//             <checkbox
-
-      // </div>    
-      // 
+// const onSubmit = async (e) => {
+  
+//   try{
+//     await axios.post('http://localhost:1234/api/host',{
+//       vehicle: vehicle, 
+//       company: company,
+//       name: name,
+//       fuleType: fuelType,
+//       registrationYear: registrationYear, 
+//       transmissionType: transmissionType, 
+//       seats: seats,
+//       fastag: fastag,
+//       kmDriven: kmDriven, 
+//       cityName: cityName,
+//       feedback: feedback,
+//       price: price
+//     })
+//   }catch (e) {
+//     console.log(e);
+//   }
+//   }
